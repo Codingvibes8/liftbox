@@ -1,0 +1,65 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+  previewFeatures = ["fullTextSearchPostgres"]
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  fullName  String?
+  avatarUrl String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  files   File[]
+  folders Folder[]
+  subscription Subscription?
+}
+
+model File {
+  id        String   @id @default(cuid())
+  name      String
+  type      String
+  size      Int
+  url       String
+  path      String   // Storage path for deletion
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  folderId  String?
+  folder    Folder?   @relation(fields: [folderId], references: [id])
+  
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+}
+
+model Folder {
+  id        String   @id @default(cuid())
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  parentFolderId String?
+  parentFolder Folder? @relation("FolderHierarchy", fields: [parentFolderId], references: [id])
+  subFolders Folder[] @relation("FolderHierarchy")
+  files      File[]
+}
+
+model Subscription {
+   id String @id @default(cuid()) 
+   stripeCustomerId String?
+   stripePriceId String?
+   stripeSubscriptionId String?
+   status String?
+   createdAt DateTime @default(now()) 
+   updatedAt DateTime @updatedAt
+   userId String @unique
+   user User @relation(fields: [userId], references: [id])
+}
