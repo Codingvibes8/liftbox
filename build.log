@@ -1,0 +1,28 @@
+
+> liftbox@0.1.0 build
+> next build
+
+Ôû▓ Next.js 16.1.6 (Turbopack)
+- Environments: .env
+
+ÔÜá The "middleware" file convention is deprecated. Please use "proxy" instead. Learn more: https://nextjs.org/docs/messages/middleware-to-proxy
+  Creating an optimized production build ...
+Ô£ô Compiled successfully in 4.4s
+  Running TypeScript ...
+Failed to compile.
+
+./app/login/page.tsx:39:21
+Type error: Type '(formData: FormData) => Promise<{ error: string; }>' is not assignable to type 'string | ((formData: FormData) => void | Promise<void>) | undefined'.
+  Type '(formData: FormData) => Promise<{ error: string; }>' is not assignable to type '(formData: FormData) => void | Promise<void>'.
+    Type 'Promise<{ error: string; }>' is not assignable to type 'void | Promise<void>'.
+      Type 'Promise<{ error: string; }>' is not assignable to type 'Promise<void>'.
+        Type '{ error: string; }' is not assignable to type 'void'.
+
+  37 |             
+  38 |             <TabsContent value="login">
+> 39 |               <form action={login} className="space-y-4">
+     |                     ^
+  40 |                 <div className="space-y-2">
+  41 |                   <Label htmlFor="email">Email</Label>
+  42 |                   <Input id="email" name="email" type="email" placeholder="name@example.com" required />
+Next.js build worker exited with code: 1 and signal: null

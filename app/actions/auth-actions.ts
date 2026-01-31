@@ -19,7 +19,7 @@ export async function login(formData: FormData) {
   });
 
   if (error) {
-    return { error: error.message };
+    redirect(`/login?error=${encodeURIComponent(error.message)}`);
   }
 
   if (data.user) {
@@ -62,7 +62,7 @@ export async function signup(formData: FormData) {
 
   if (error) {
      console.error(error)
-     return { error: error.message };
+     redirect(`/login?error=${encodeURIComponent(error.message)}`);
   }
 
   if (data.user) {
@@ -107,7 +107,7 @@ export async function signInWithGoogle() {
   });
 
   if (error) {
-    return { error: error.message };
+    redirect(`/login?error=${encodeURIComponent(error.message)}`);
   }
 
   if (data.url) {

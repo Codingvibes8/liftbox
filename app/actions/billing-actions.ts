@@ -5,12 +5,12 @@ import { stripe } from "@/lib/stripe";
 import { createClient } from "@/lib/supabase/server";
 import { headers } from "next/headers";
 
-export async function createCheckoutSession() {
+export async function createCheckoutSession(formData: FormData) {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
 
   if (!user) {
-    return { error: "Unauthorized" };
+    redirect("/sign-in");
   }
 
   const origin = (await headers()).get("origin");

@@ -47,7 +47,7 @@ export async function POST(req: Request) {
       session.subscription as string
     );
 
-    await prisma.subscription.update({
+    await prisma.subscription.updateMany({
       where: {
         stripeSubscriptionId: subscription.id,
       },
